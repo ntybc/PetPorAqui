@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>PetPorAqui – Adote com Amor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+    <nav>
+        <div class="logotipo" onclick="navegar('inicio')">🐾 PetPor<span>Aqui</span></div>
+        <ul>
+            <li><a class="link-nav ativo" onclick="navegar('inicio')">Início</a></li>
+            <li><a class="link-nav" onclick="navegar('adotar')">Quero Adotar</a></li>
+            <li><a class="link-nav" onclick="navegar('mapa')">Mapa</a></li>
+            <li><a class="link-nav" onclick="navegar('chat')">Mensagens</a></li>
+            <li><button id="btn-nav-login" class="btn btn-principal" style="padding: 8px 20px;" onclick="abrirModalLogin()">Entrar</button></li>
+        </ul>
+    </nav>
+
+    <main id="inicio" class="pagina ativo">
+        <div class="destaque">
+            <h1>Encontre seu novo melhor amigo pertinho de você</h1>
+            <p>O PetPorAqui conecta animais que precisam de um lar com famílias amorosas na sua região. Adoção responsável, simples e transparente.</p>
+            <button class="btn btn-principal" onclick="navegar('adotar')">Ver Pets Disponíveis</button>
+        </div>
+
+        <h2 style="text-align: center; margin-bottom: 20px;">Como Funciona?</h2>
+        <div class="grade-recursos">
+            <div class="cartao-recurso">
+                <div class="icone-recurso">🔍</div>
+                <h3>Busque</h3>
+                <p>Encontre cães e gatos resgatados por ONGs e protetores da sua cidade.</p>
+            </div>
+            <div class="cartao-recurso">
+                <div class="icone-recurso">💬</div>
+                <h3>Converse</h3>
+                <p>Entre em contato direto com os responsáveis para tirar dúvidas e agendar visitas.</p>
+            </div>
+            <div class="cartao-recurso">
+                <div class="icone-recurso">🏡</div>
+                <h3>Adote</h3>
+                <p>Passe pelo processo de triagem e leve muito amor para a sua casa.</p>
+            </div>
+        </div>
+    </main>
+
+    <main id="adotar" class="pagina">
+        <h2 style="margin-bottom: 10px;">Pets esperando por você</h2>
+        <p style="color: var(--opaco); margin-bottom: 30px;">Conheça os animais disponíveis para adoção responsável hoje.</p>
+        
+        <div class="grade-pets" id="recipiente-pets">
+            </div>
+    </main>
+
+    <main id="mapa" class="pagina">
+        <h2 style="margin-bottom: 10px;">Encontre pets perto de você</h2>
+        <p style="color: var(--opaco); margin-bottom: 20px;">Navegue pelo mapa e clique no ícone do pet para ver detalhes e iniciar o processo de adoção.</p>
+        
+        <div class="caixa-mapa" id="caixa-mapa">
+            </div>
+    </main>
+
+    <main id="chat" class="pagina">
+        <h2 style="margin-bottom: 20px;">Suas Conversas</h2>
+        <div class="layout-chat">
+            <div class="barra-lateral-chat" id="barra-lateral-chat">
+                <div class="contato-chat ativo">
+                    <h4>ONG Amigos de Pata</h4>
+                    <p>Sobre: Bob - Ele se adapta bem...</p>
+                </div>
+                <div class="contato-chat">
+                    <h4>Dona Maria</h4>
+                    <p>Sobre: Princesa - Boa tarde! A...</p>
+                </div>
+            </div>
+            
+            <div class="janela-chat">
+                <div class="cabecalho-chat">
+                    <h3 id="nome-tutor-chat">ONG Amigos de Pata</h3>
+                    <span class="etiqueta" id="etiqueta-pet-chat">🐾 Bob</span>
+                </div>
+                
+                <div class="mensagens-chat" id="mensagens-chat">
+                    <p style="text-align: center; color: var(--opaco); margin-bottom: 10px; font-size: 0.85rem;">Ontem</p>
+                    <div class="msg recebida">Olá! Recebemos a notificação de que você se interessou pelo Bob. 🐕</div>
+                    <div class="msg enviada">Oi! Sim, achei ele lindo. Ele se dá bem vivendo em apartamento?</div>
+                    <div class="msg recebida">Ele se adapta super bem, mas como tem bastante energia, precisaria de passeios diários de pelo menos 40 minutos.</div>
+                    <div class="msg enviada">Perfeito! Eu trabalho de casa, então tenho bastante flexibilidade de horários.</div>
+                </div>
+                
+                <div class="area-digitacao-chat">
+                    <input type="text" id="entrada-chat" placeholder="Escreva sua mensagem aqui..." onkeypress="lidarComTecla(event)">
+                    <button onclick="enviarMensagem()">➤</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="sobreposicao-modal" id="modalPet">
+        <div class="conteudo-modal">
+            <button class="fechar-modal" onclick="fecharModalPet()">×</button>
+            <img src="" id="img-modal" class="img-modal" alt="Foto do Pet">
+            <h2 id="nome-modal" style="margin-bottom: 10px;">Nome do Pet</h2>
+            <div class="etiquetas-pet" id="etiquetas-modal"></div>
+            <p id="desc-modal" style="color: var(--opaco); margin-bottom: 15px;">Descrição do pet.</p>
+            <h4 style="margin-bottom: 10px;">Informações de Saúde:</h4>
+            <p id="saude-modal" style="margin-bottom: 15px; font-size: 0.9rem; background: var(--creme); padding: 10px; border-radius: 8px;">Vacinado</p>
+            
+            <div class="caixa-termo">
+                <strong>Termo de Responsabilidade Digital</strong>
+                Ao prosseguir, declaro ser maior de 18 anos e me comprometo a cuidar do animal com zelo, fornecendo alimentação, abrigo, assistência veterinária e muito carinho. Tenho ciência de que o abandono ou maus-tratos é crime (Lei 14.064/2020).
+            </div>
+            
+            <div class="aceite-termo">
+                <input type="checkbox" id="termo-aceite">
+                <label for="termo-aceite">Li e concordo com o Termo de Responsabilidade</label>
+            </div>
+            
+            <button class="btn btn-principal" style="width: 100%;" onclick="verificarTermoEAdotar()">Assinar Termo e Entrar em Contato</button>
+        </div>
+    </div>
+    
+    <div class="sobreposicao-modal" id="modalLogin">
+        <div class="conteudo-modal" style="max-width: 400px; text-align: center;">
+            <button class="fechar-modal" onclick="fecharModalLogin()">×</button>
+            <h2 style="margin-bottom: 20px; font-family: 'Baloo 2', cursive; color: var(--coral);">🐾 Bem-vindo de volta!</h2>
+            
+            <div class="grupo-entrada">
+                <label>E-mail</label>
+                <input type="email" id="email-login" placeholder="seu@email.com">
+            </div>
+            
+            <div class="grupo-entrada" style="margin-bottom: 25px;">
+                <label>Senha</label>
+                <input type="password" id="senha-login" placeholder="••••••••">
+            </div>
+            
+            <button class="btn btn-principal" style="width: 100%; margin-bottom: 10px;" onclick="fazerLogin()">Entrar</button>
+            <p style="font-size: 0.85rem; color: var(--opaco);">Novo por aqui? <a href="#" style="color: var(--coral);">Crie sua conta</a></p>
+        </div>
+    </div>
+
+    <footer>
+        <h2 class="logotipo" style="margin-bottom: 10px;">🐾 PetPor<span>Aqui</span></h2>
+        <p>Projeto Acadêmico - Análise e Desenvolvimento de Sistemas &copy; 2026</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
